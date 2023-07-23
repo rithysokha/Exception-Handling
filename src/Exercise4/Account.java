@@ -8,76 +8,96 @@ public class Account {
     private int accountNumber;
     private int password;
 
-    
-
-    //setter getter for accesing private variable
+    // setter getter for accesing private variable
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public double getBalance() {
         return this.balance;
     }
+
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
     public int getAccountNumber() {
         return this.accountNumber;
     }
+
     public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
     }
+
     public int getPassword() {
         return this.password;
     }
+
     public void setPassword(int password) {
         this.password = password;
     }
- //constructor
-    public Account(String name, double balance, int accountNumber, int password) {
+
+    // constructor
+    public Account(String name, double balance, int password) {
         this.name = name;
         this.balance = balance;
-        this.accountNumber = accountNumber;
         this.password = password;
     }
-    public HashMap <Integer, Account> accountList = new HashMap<Integer, Account>();
-    void displayLine(){
-        System.out.println("==================================");
+
+    public HashMap<Integer, Account> accountList = new HashMap<>();
+    void displayLine() {
+        System.out.println("============================================");
     }
-    
-    boolean login(int accountNumber, int password) {
-        if (this.accountNumber == accountNumber && this.password == password) {
+    boolean logIn(int accountNumber, int password) {
+        if (accountList.containsKey(accountNumber) && accountList.get(accountNumber).getPassword() == password) {
+            System.out.println("Login successful");
+            System.out.println("Welcome " + accountList.get(accountNumber).getName());
             return true;
         } else {
-            System.out.println("Wrong account number or password");
+            System.out.println("Login failed");
             return false;
-        }
-    }
-    void displayBalance() {
-        System.out.println("Your balance is: " + this.balance);
-    }
-    void deposit(double amount) {
-        this.balance += amount;
-        System.out.println("Your balance is: " + this.balance);
-    }
-    void withdraw(double amount) {
-        if (this.balance >= amount) {
-            this.balance -= amount;
-            displayBalance();
-        } else {
-            System.out.println("Your balance is not enough");
-        }
-    }
-    void transfer(Account account, double amount) {
-        if (this.balance >= amount) {
-            this.balance -= amount;
-            account.balance += amount;
-            displayBalance();
-        } else {
-            System.out.println("Your balance is not enough");
-        }
-    }
 
+        }
+    }
+    void displayBalance(int accountNumber){
+        System.out.println("Your balance is: " + accountList.get(accountNumber).getBalance());
+    }
+    void deposit (int accountNumer, double ammount){
+        accountList.get(accountNumer).setBalance(accountList.get(accountNumer).getBalance() + ammount);
+        System.out.println("Deposit successful");
+    }
+    void withdraw(int accountNumber, double ammount){
+        if(accountList.get(accountNumber).getBalance() < ammount){
+            System.out.println("Insufficient balance");
+        }else{
+            accountList.get(accountNumber).setBalance(accountList.get(accountNumber).getBalance() - ammount);
+            System.out.println("Withdraw successful");
+        }
+    }
+    void transfer(int accountNumer, int accountNumberTransfer, double ammount){
+        if(!accountList.containsKey(accountNumberTransfer)){
+            System.out.println("Account number not found");
+            return;
+        }
+        if(accountList.get(accountNumer).getBalance() < ammount){
+            System.out.println("Insufficient balance");
+        }else{
+            accountList.get(accountNumer).setBalance(accountList.get(accountNumer).getBalance() - ammount);
+            accountList.get(accountNumberTransfer).setBalance(accountList.get(accountNumberTransfer).getBalance() + ammount);
+            System.out.println("Transfer successful");
+        }
+    }
+    void displayMenu() {
+        displayLine();
+        System.out.println("Please select an option: ");
+        System.out.println("A. Display balance");
+        System.out.println("B. Deposit");
+        System.out.println("C. Withdraw");
+        System.out.println("D. Transfer");
+        System.out.println("E. Exit");
+    }
 }
