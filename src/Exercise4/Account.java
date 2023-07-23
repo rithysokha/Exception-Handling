@@ -1,5 +1,8 @@
 package Exercise4;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileReader;
 import java.util.HashMap;
 
 public class Account {
@@ -7,6 +10,8 @@ public class Account {
     private double balance;
     private int accountNumber;
     private int password;
+    
+    
 
     // setter getter for accesing private variable
     public String getName() {
@@ -49,6 +54,7 @@ public class Account {
     }
 
     public HashMap<Integer, Account> accountList = new HashMap<>();
+   
     void displayLine() {
         System.out.println("============================================");
     }
@@ -100,4 +106,5 @@ public class Account {
         System.out.println("D. Transfer");
         System.out.println("E. Exit");
     }
+    
 }

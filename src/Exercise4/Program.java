@@ -1,5 +1,7 @@
 package Exercise4;
-
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 public class Program {
@@ -7,16 +9,20 @@ public class Program {
     public static void main(String[] args) {
         Account accountObj = new Account("", 0, 0) {
         };
-        accountObj.accountList.put(123456, new Account("Nika", 10000, 123456));
-        accountObj.accountList.put(654321, new Account("Nike", 20000, 654321));
-        accountObj.accountList.put(111111, new Account("Nuka", 30000, 111111));
-        accountObj.accountList.put(222222, new Account("Neka", 40000, 222222));
-        accountObj.accountList.put(333333, new Account("Naka", 50000, 333333));
+        accountObj.accountList.put(12345, new Account("Nika", 10000, 12345));
+        accountObj.accountList.put(23456, new Account("Nike", 20000, 12345));
+        accountObj.accountList.put(34567, new Account("Nuka", 30000,12345));
+        accountObj.accountList.put(45678, new Account("Neka", 40000, 12345));
+        accountObj.accountList.put(56789, new Account("Naka", 50000, 12345));
+
+        File file = new File("src\\Exercise4\\account.txt");
+        
+
         Scanner input = new Scanner(System.in);
         int accountNumber = 0;
         int accountNumberTransfer = 0;
         int password = 0;
-        char choice = ' ';
+        char choice;
         boolean isLogin = false;
         boolean isExit = false;
 
@@ -73,6 +79,16 @@ public class Program {
                     System.out.println("Invalid choice");
                     break;
             }
+        }
+        try {
+            // try to create a file
+             FileWriter writer = new FileWriter(file);
+             for(int key : accountObj.accountList.keySet()){
+                writer.write(key +"\t" +  accountObj.accountList.get(key).getName() + "\t" + accountObj.accountList.get(key).getBalance() + "$" + "\t" + accountObj.accountList.get(key).getPassword() + "\n");
+             }        
+            writer.close();
+        } catch (Exception e) {
+            System.out.println(e);
         }
         input.close();
     }
