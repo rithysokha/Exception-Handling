@@ -1,5 +1,6 @@
 package Exercise6;
 
+import java.util.HashMap;
 public class Employee {
     private int id;
     private String name;
@@ -30,11 +31,20 @@ public class Employee {
     public void setSalary(int salary) {
         this.salary = salary;
     }
-    public Employee(int id, String name, String gender, int salary){
-        this.id = id;
+    public Employee( String name, String gender, int salary){
         this.name = name;
         this.gender = gender;
         this.salary = salary;
     }
+    public HashMap<Integer, Employee> employeeList = new HashMap<>();
 
+    void readEmployee(int employeeID){
+        System.out.println();
+    }
+    void addEmployee(int employeeID){
+        System.out.println();
+    }
+    void deleteEmployee(int employeeID){
+        System.out.println();
+    }
 }
