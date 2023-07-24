@@ -1,5 +1,5 @@
 //group 8
-package Exercise4;
+package Exercise7;
 
 import java.io.BufferedReader;
 import java.io.File;
