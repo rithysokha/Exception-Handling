@@ -1,8 +1,4 @@
 package Exercise4;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FileReader;
 import java.util.HashMap;
 
 public class Account {

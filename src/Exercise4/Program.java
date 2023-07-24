@@ -1,4 +1,7 @@
+//group 8
 package Exercise4;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,15 +12,34 @@ public class Program {
     public static void main(String[] args) {
         Account accountObj = new Account("", 0, 0) {
         };
-        accountObj.accountList.put(12345, new Account("Nika", 10000, 12345));
-        accountObj.accountList.put(23456, new Account("Nike", 20000, 12345));
-        accountObj.accountList.put(34567, new Account("Nuka", 30000,12345));
-        accountObj.accountList.put(45678, new Account("Neka", 40000, 12345));
-        accountObj.accountList.put(56789, new Account("Naka", 50000, 12345));
 
         File file = new File("src\\Exercise4\\account.txt");
-        
+        try {
+            // Creates a reader that is linked with the myFile.txt
+            FileReader reader = new FileReader("src\\Exercise4\\account.txt");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] keyValuePair = line.split(", ");
+                String accNum = keyValuePair[0];
+                String name = keyValuePair[1];
+                String balance = keyValuePair[2];
+                String password = keyValuePair[3];
+                Integer accInteger = Integer.parseInt(accNum);
+                double balanDouble = Double.parseDouble(balance);
+                int passwordInt = Integer.parseInt(password);
 
+                // Add the key-value pair to the HashMap.
+                accountObj.accountList.put(accInteger, new Account(name, balanDouble, passwordInt));
+            }
+
+            // Close the file.
+            bufferedReader.close();
+
+            reader.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         Scanner input = new Scanner(System.in);
         int accountNumber = 0;
         int accountNumberTransfer = 0;
@@ -40,7 +62,7 @@ public class Program {
             isLogin = accountObj.logIn(accountNumber, password);
 
         } while (!isLogin);
-        while(!isExit){
+        while (!isExit) {
             try {
                 accountObj.displayMenu();
                 choice = input.next().charAt(0);
@@ -50,7 +72,7 @@ public class Program {
                 input.nextLine();
                 continue;
             }
-            switch(choice){
+            switch (choice) {
                 case 'a', 'A':
                     accountObj.displayBalance(accountNumber);
                     break;
@@ -82,10 +104,12 @@ public class Program {
         }
         try {
             // try to create a file
-             FileWriter writer = new FileWriter(file);
-             for(int key : accountObj.accountList.keySet()){
-                writer.write(key +"\t" +  accountObj.accountList.get(key).getName() + "\t" + accountObj.accountList.get(key).getBalance() + "$" + "\t" + accountObj.accountList.get(key).getPassword() + "\n");
-             }        
+            FileWriter writer = new FileWriter(file);
+            for (int key : accountObj.accountList.keySet()) {
+                writer.write(key + ", " + accountObj.accountList.get(key).getName() + ", " +
+                        accountObj.accountList.get(key).getBalance() + ", " +
+                        accountObj.accountList.get(key).getPassword() + "\n");
+            }
             writer.close();
         } catch (Exception e) {
             System.out.println(e);
