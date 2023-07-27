@@ -13,10 +13,10 @@ public class Program {
         Account accountObj = new Account("", 0, 0) {
         };
 
-        File file = new File("src\\Exercise4\\account.txt");
+        File file = new File("src\\Exercise7\\account.txt");
         try {
             // Creates a reader that is linked with the myFile.txt
-            FileReader reader = new FileReader("src\\Exercise4\\account.txt");
+            FileReader reader = new FileReader("src\\Exercise7\\account.txt");
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
