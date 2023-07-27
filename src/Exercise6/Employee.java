@@ -1,3 +1,4 @@
+//group8
 package Exercise6;
 
 import java.io.BufferedReader;
@@ -6,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Scanner;
-import Exercise7.Account;
 
 public class Employee {
     private int id;

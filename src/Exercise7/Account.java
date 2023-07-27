@@ -1,5 +1,10 @@
+//group8
 package Exercise7;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.HashMap;
 
 public class Account {
@@ -48,12 +53,56 @@ public class Account {
         this.password = password;
     }
 
-    public HashMap<Integer, Account> accountList = new HashMap<>();
+    HashMap<Integer, Account> accountList = new HashMap<>();
 
     void displayLine() {
         System.out.println("============================================");
     }
+    void readFile(){
+        
+        try {
+            // Creates a reader that is linked with the myFile.txt
+            FileReader reader = new FileReader("src\\Exercise7\\account.txt");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] keyValue = line.split(", ");
+                String accNum = keyValue[0];
+                String nameStr = keyValue[1];
+                String balanceStr = keyValue[2];
+                String passwordStr = keyValue[3];
+            //convert string to integer and double 
+                Integer accInteger = Integer.parseInt(accNum);
+                double balanDouble = Double.parseDouble(balanceStr);
+                int passwordInt = Integer.parseInt(passwordStr);
 
+                // Add the key-value pair to the HashMap.
+                accountList.put(accInteger, new Account(nameStr, balanDouble, passwordInt));
+            }
+
+            // Close the file.
+            bufferedReader.close();
+            reader.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    //write data back into txt file
+    void writeFile(){
+        File file = new File("src\\Exercise7\\account.txt");
+        try {
+            // write file back into account.txt
+            FileWriter writer = new FileWriter(file);
+            for (int key : accountList.keySet()) {
+                writer.write(key + ", " + accountList.get(key).getName() + ", " +
+                        accountList.get(key).getBalance() + ", " +
+                        accountList.get(key).getPassword() + "\n");
+            }
+            writer.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     // login method will return true if the password and account number is correct
     boolean logIn(int accountNumber, int password) {
         displayLine();
@@ -79,6 +128,7 @@ public class Account {
         displayLine();
         accountList.get(accountNumer).setBalance(accountList.get(accountNumer).getBalance() + ammount);
         System.out.println("Deposit successful!");
+        writeFile();
     }
 
     // withdraw method will check banlance before withdraq
@@ -90,6 +140,7 @@ public class Account {
             accountList.get(accountNumber).setBalance(accountList.get(accountNumber).getBalance() - ammount);
             System.out.println("Withdraw successful.");
         }
+        writeFile();
     }
 
     // transfer method will check balance and account validility before work
@@ -108,6 +159,7 @@ public class Account {
                 accountList.get(accountNumberTransfer)
                         .setBalance(accountList.get(accountNumberTransfer).getBalance() + ammount);
                 System.out.println("Transfer successful.");
+                writeFile();
             }
         } else {
             System.out.println("You can't transfer to your own account.");

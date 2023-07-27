@@ -1,0 +1,3 @@
+Hello
+Do you want a date?
+Welcome to my java

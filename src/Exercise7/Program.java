@@ -1,45 +1,13 @@
 //group 8
 package Exercise7;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.Scanner;
-
 public class Program {
 
     public static void main(String[] args) {
+        //create accountObj to call method from Account.java
         Account accountObj = new Account("", 0, 0) {
         };
-
-        File file = new File("src\\Exercise7\\account.txt");
-        try {
-            // Creates a reader that is linked with the myFile.txt
-            FileReader reader = new FileReader("src\\Exercise7\\account.txt");
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] keyValuePair = line.split(", ");
-                String accNum = keyValuePair[0];
-                String name = keyValuePair[1];
-                String balance = keyValuePair[2];
-                String password = keyValuePair[3];
-                Integer accInteger = Integer.parseInt(accNum);
-                double balanDouble = Double.parseDouble(balance);
-                int passwordInt = Integer.parseInt(password);
-
-                // Add the key-value pair to the HashMap.
-                accountObj.accountList.put(accInteger, new Account(name, balanDouble, passwordInt));
-            }
-
-            // Close the file.
-            bufferedReader.close();
-
-            reader.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        accountObj.readFile();
         Scanner input = new Scanner(System.in);
         int accountNumber = 0;
         int accountNumberTransfer = 0;
@@ -55,6 +23,7 @@ public class Program {
                 System.out.println("Enter your password: ");
                 password = input.nextInt();
             } catch (Exception e) {
+                //will show error if user input wrong type
                 System.out.println("Only number allowed");
                 input.nextLine();
                 continue;
@@ -101,18 +70,6 @@ public class Program {
                     System.out.println("Invalid choice");
                     break;
             }
-        }
-        try {
-            // try to create a file
-            FileWriter writer = new FileWriter(file);
-            for (int key : accountObj.accountList.keySet()) {
-                writer.write(key + ", " + accountObj.accountList.get(key).getName() + ", " +
-                        accountObj.accountList.get(key).getBalance() + ", " +
-                        accountObj.accountList.get(key).getPassword() + "\n");
-            }
-            writer.close();
-        } catch (Exception e) {
-            System.out.println(e);
         }
         input.close();
     }
